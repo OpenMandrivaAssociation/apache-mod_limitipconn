@@ -6,7 +6,7 @@
 Summary:	Mod_limitipconn is a DSO module for the apache web server
 Name:		apache-%{mod_name}
 Version:	0.22
-Release:	%mkrel 4
+Release:	%mkrel 5
 Group:		System/Servers
 License:	GPL
 URL:		http://dominia.org/djao/limitipconn.html
@@ -20,8 +20,6 @@ Requires:	apache-conf >= 2.2.0
 Requires:	apache >= 2.2.0
 BuildRequires:	apache-devel >= 2.2.0
 BuildRequires:	file
-Provides:	apache2-mod_limitipconn
-Obsoletes:	apache2-mod_limitipconn
 Epoch:		1
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
