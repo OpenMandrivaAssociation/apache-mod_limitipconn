@@ -6,12 +6,12 @@
 Summary:	Mod_limitipconn is a DSO module for the apache web server
 Name:		apache-%{mod_name}
 Version:	0.22
-Release:	%mkrel 5
+Release:	%mkrel 6
 Group:		System/Servers
 License:	GPL
 URL:		http://dominia.org/djao/limitipconn.html
-Source0:	%{mod_name}-%{version}.tar.bz2
-Source1:	%{mod_conf}.bz2
+Source0:	http://dominia.org/djao/limit/%{mod_name}-%{version}.tar.gz
+Source1:	%{mod_conf}
 Requires(pre): rpm-helper
 Requires(postun): rpm-helper
 Requires(pre):	apache-conf >= 2.2.0
@@ -32,11 +32,13 @@ type.
 %prep
 
 %setup -q -n %{mod_name}-%{version}
-# OE: do _not_ apply any register patch here!
 
 # strip away annoying ^M
 find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
 find . -type f|xargs file|grep 'text'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
+
+cp %{SOURCE1} %{mod_conf}
+mv README mod_limitipconn-README.txt
 
 %build
 
@@ -49,14 +51,14 @@ install -d %{buildroot}%{_libdir}/apache-extramodules
 install -d %{buildroot}%{_sysconfdir}/httpd/modules.d
 
 install -m0755 .libs/*.so %{buildroot}%{_libdir}/apache-extramodules/
-bzcat %{SOURCE1} > %{buildroot}%{_sysconfdir}/httpd/modules.d/%{mod_conf}
+install -m0644 %{mod_conf} %{buildroot}%{_sysconfdir}/httpd/modules.d/%{mod_conf}
 
 install -d %{buildroot}%{_var}/www/html/addon-modules
-ln -s ../../../..%{_docdir}/%{name}-%{version} %{buildroot}%{_var}/www/html/addon-modules/%{name}-%{version}
+ln -s ../../../..%{_docdir}/%{name} %{buildroot}%{_var}/www/html/addon-modules/%{name}
 
 # make the example work... (ugly, but it works...)
 
-NEW_URL=/addon-modules/%{name}-%{version}
+NEW_URL=/addon-modules/%{name}
 perl -pi -e "s|_REPLACE_ME_|$NEW_URL|g" %{buildroot}%{_sysconfdir}/httpd/modules.d/%{mod_conf}
 
 %post
@@ -76,9 +78,7 @@ fi
 
 %files
 %defattr(-,root,root)
-%doc ChangeLog INSTALL README
+%doc ChangeLog INSTALL mod_limitipconn-README.txt
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/%{mod_conf}
 %attr(0755,root,root) %{_libdir}/apache-extramodules/%{mod_so}
 %{_var}/www/html/addon-modules/*
-
-
