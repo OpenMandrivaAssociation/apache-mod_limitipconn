@@ -5,12 +5,12 @@
 
 Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
-Version:	0.22
-Release:	%mkrel 9
+Version:	0.23
+Release:	%mkrel 1
 Group:		System/Servers
 License:	GPL
 URL:		http://dominia.org/djao/limitipconn.html
-Source0:	http://dominia.org/djao/limit/%{mod_name}-%{version}.tar.gz
+Source0:	http://dominia.org/djao/limit/%{mod_name}-%{version}.tar.bz2
 Source1:	%{mod_conf}
 Requires(pre): rpm-helper
 Requires(postun): rpm-helper
@@ -45,7 +45,7 @@ mv README mod_limitipconn-README.txt
 %{_sbindir}/apxs  -c %{mod_name}.c
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 install -d %{buildroot}%{_libdir}/apache-extramodules
 install -d %{buildroot}%{_sysconfdir}/httpd/modules.d
@@ -57,7 +57,6 @@ install -d %{buildroot}%{_var}/www/html/addon-modules
 ln -s ../../../..%{_docdir}/%{name} %{buildroot}%{_var}/www/html/addon-modules/%{name}
 
 # make the example work... (ugly, but it works...)
-
 NEW_URL=/addon-modules/%{name}
 perl -pi -e "s|_REPLACE_ME_|$NEW_URL|g" %{buildroot}%{_sysconfdir}/httpd/modules.d/%{mod_conf}
 
@@ -74,7 +73,7 @@ if [ "$1" = "0" ]; then
 fi
 
 %clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
