@@ -6,9 +6,9 @@
 Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
 Version:	0.23
-Release:	%mkrel 1
+Release:	%mkrel 2
 Group:		System/Servers
-License:	GPL
+License:	Apache License
 URL:		http://dominia.org/djao/limitipconn.html
 Source0:	http://dominia.org/djao/limit/%{mod_name}-%{version}.tar.bz2
 Source1:	%{mod_conf}
