@@ -9,7 +9,7 @@ Version:	0.24
 Release:	2
 Group:		System/Servers
 License:	Apache License
-URL:		http://dominia.org/djao/limitipconn.html
+URL:		https://dominia.org/djao/limitipconn.html
 Source0:	http://dominia.org/djao/limit/%{mod_name}-%{version}.tar.bz2
 Source1:	%{mod_conf}
 Requires(pre): rpm-helper
